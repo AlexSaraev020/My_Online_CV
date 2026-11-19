@@ -446,6 +446,11 @@ html[data-js="on"] .stagger > *.in { opacity: 1; transform: none; }
 }
 .repo-thumb { border: 1px solid var(--rule); background: var(--graphite); }
 .repo-thumb .pv { display: block; width: 100%; height: auto; aspect-ratio: 640 / 400; }
+/* one photo visible at a time: the arrows are buttons, so the keyboard reaches them */
+.repo-carousel { display: flex; align-items: center; gap: var(--s-2); margin-top: var(--s-3); }
+.repo-carousel button { display: grid; place-items: center; min-width: 44px; min-height: 44px;color: var(--mint); background: var(--graphite); border: 1px solid var(--rule-cyan); border-radius: var(--r-3); font: 500 15px/1 var(--font-mono); cursor: pointer; }
+.repo-carousel button:hover { color: var(--fg); background: var(--ink-3); border-color: var(--mint); }
+.repo-carousel span { flex: 1; text-align: center; font: 400 var(--fs-cap)/1 var(--font-mono); letter-spacing: var(--ls-cap); text-transform: uppercase; color: var(--fg-3); }
 .repo-body { display: grid; gap: var(--s-3); }
 .repo-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-3); }
 .repo-title b, .repo-title a { font-family: var(--font-display); font-variation-settings: 'opsz' 30, 'wdth' 82, 'wght' 700; font-size: clamp(24px, 2.2vw, 38px); line-height: 1.02; letter-spacing: -0.026em; color: var(--fg); }
@@ -470,13 +475,16 @@ html[data-js="on"] .stagger > *.in { opacity: 1; transform: none; }
 .case-gallery li { border: 1px solid var(--rule); background: var(--graphite); }
 .repo-title i { font: 400 var(--fs-cap)/1.4 var(--font-mono); font-style: normal; letter-spacing: var(--ls-cap); text-transform: uppercase; color: var(--fg-3); }
 .repo-line { color: var(--fg-2); font-size: var(--fs-body); line-height: var(--lh-body); max-width: 58ch; }
-.repo-links { display: flex; flex-direction: column; }
-.repo-links a { display: inline-flex; align-items: center; justify-content: flex-end; min-height: 44px; padding: 0 0 0 var(--s-4); font: 500 var(--fs-cap)/1 var(--font-mono); letter-spacing: var(--ls-cap); text-transform: uppercase; color: var(--cyan); border-bottom: 1px solid var(--rule); }
-.repo-links a:hover { color: var(--mint); border-bottom-color: var(--mint); }
+/* the house button shape, so these read as the row's actions instead of footnotes */
+.repo-links { display: flex; flex-direction: column; gap: var(--s-2); }
+.repo-links a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 var(--s-4); border: 1px solid var(--rule); border-radius: var(--r-1); background: transparent; font: 500 var(--fs-cap)/1 var(--font-mono); letter-spacing: var(--ls-cap); text-transform: uppercase; color: var(--fg); transition: background var(--d-1) var(--e-out), color var(--d-1) var(--e-out), border-color var(--d-1) var(--e-out); }
+.repo-links a:hover { border-color: var(--mint); color: var(--mint); }
+/* the case study is what this row exists for, so it carries the filled button */
+.repo-links a:first-child { background: var(--mint); border-color: var(--mint); color: #05231a; }
+.repo-links a:first-child:hover { background: #6dedc0; border-color: #6dedc0; }
 @media (max-width: 1023px) {
   .repo-row { grid-template-columns: 176px minmax(0, 1fr); }
   .repo-links { grid-column: 2; flex-direction: row; gap: var(--s-4); }
-  .repo-links a { padding: 0; }
 }
 @media (max-width: 767px) {
   .repo-row { grid-template-columns: minmax(0, 1fr); gap: var(--s-4); }

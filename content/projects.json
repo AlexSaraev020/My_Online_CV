@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-19T00:20:50.039Z",
+    "generatedAt": "2026-11-19T10:49:07.889Z",
     "user": "AlexSaraev020",
     "accountRepos": 10,
     "eligible": 2,
@@ -27,7 +27,7 @@
       },
       {
         "repo": "AlexSaraev020/MERN_Steam_App",
-        "reason": "already curated on the work plate — remove it from lib/curated.ts to drive it from PORTFOLIO.md"
+        "reason": "no PORTFOLIO.md in the repository root"
       },
       {
         "repo": "AlexSaraev020/Weather_App",
@@ -40,7 +40,7 @@
     ],
     "warnings": [],
     "partial": false,
-    "apiCallsRemaining": 4988
+    "apiCallsRemaining": 4983
   },
   "projects": [
     {
@@ -91,31 +91,38 @@
       "images": [
         {
           "kind": "cover",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/feed-desktop.jpg",
-          "path": "docs/portfolio/feed-desktop.jpg",
-          "w": 2000,
-          "h": 4360
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/wevibe-home.jpg",
+          "path": "docs/portfolio/wevibe-home.jpg",
+          "w": 2880,
+          "h": 2000
         },
         {
           "kind": "gallery",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/profile-desktop.jpg",
-          "path": "docs/portfolio/profile-desktop.jpg",
-          "w": 2000,
-          "h": 4360
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/wevibe-feed.jpg",
+          "path": "docs/portfolio/wevibe-feed.jpg",
+          "w": 2880,
+          "h": 2000
         },
         {
           "kind": "gallery",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/thread-desktop.jpg",
-          "path": "docs/portfolio/thread-desktop.jpg",
-          "w": 2000,
-          "h": 4360
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/wevibe-discover.jpg",
+          "path": "docs/portfolio/wevibe-discover.jpg",
+          "w": 2880,
+          "h": 2000
         },
         {
           "kind": "gallery",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/people-phone.jpg",
-          "path": "docs/portfolio/people-phone.jpg",
-          "w": 2532,
-          "h": 4360
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/wevibe-profile.jpg",
+          "path": "docs/portfolio/wevibe-profile.jpg",
+          "w": 2880,
+          "h": 2000
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/wevibe-login.jpg",
+          "path": "docs/portfolio/wevibe-login.jpg",
+          "w": 2880,
+          "h": 2000
         }
       ],
       "warnings": []
@@ -166,22 +173,22 @@
           "kind": "cover",
           "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/cover.jpg",
           "path": "docs/portfolio/cover.jpg",
-          "w": 2000,
-          "h": 4360
+          "w": 2880,
+          "h": 2000
         },
         {
           "kind": "gallery",
           "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/work-plate.jpg",
           "path": "docs/portfolio/work-plate.jpg",
-          "w": 2000,
-          "h": 4360
+          "w": 2880,
+          "h": 2000
         },
         {
           "kind": "gallery",
           "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/case-study.jpg",
           "path": "docs/portfolio/case-study.jpg",
-          "w": 2000,
-          "h": 4360
+          "w": 2880,
+          "h": 2000
         }
       ],
       "warnings": []

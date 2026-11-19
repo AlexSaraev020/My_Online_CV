@@ -35,7 +35,7 @@ database — which is also why no GitHub credential can ever reach the browser.
 | `lib/field/shaders.ts` | the GLSL, unchanged from the original build |
 | `lib/field/state.ts` | the single meeting point between the DOM layer and WebGL |
 | `lib/site.ts` | name, contact, capabilities, process, CV, skills, principles — the content you edit |
-| `lib/curated.ts` | the six hand-authored case studies on Plate 04 |
+| `lib/curated.ts` | hand-authored case studies — empty today, every build comes from PORTFOLIO.md |
 | `lib/portfolio.ts` | **the** `PORTFOLIO.md` schema and validator (Zod), imported by both the site and the synchroniser |
 | `lib/feed.ts` | maps curated plates and GitHub projects into one `Case` model, so one renderer designs both |
 | `content/projects.json` | generated feed. Do not edit it by hand — regenerate it |
@@ -57,9 +57,9 @@ topics, no tags, no editing components. The format is in `PORTFOLIO_SCHEMA.md`; 
 enforced by `lib/portfolio.ts`.
 
 1. Copy `examples/PORTFOLIO.wevibe.md` into a repository as `PORTFOLIO.md`.
-2. If that build is one of the six curated plates, delete its entry from `lib/curated.ts` — until you
-   do, the synchroniser reports it as "already curated on the work plate" and skips it, so the plate
-   never doubles up.
+2. If a build is hand-authored in `lib/curated.ts`, delete its entry there — until you do, the
+   synchroniser reports it as "already curated on the work plate" and skips it, so the plate never
+   doubles up.
 3. `npm run sync` locally, or let `.github/workflows/portfolio-sync.yml` do it.
 
 Each published project gets a card and a page at `/work/<slug>`, with its Markdown rendered as typed
@@ -74,8 +74,8 @@ stub. If GitHub is unreachable or rate-limited, the synchroniser writes nothing 
 stays in place: a failed sync cannot empty the site. `GITHUB_TOKEN` (the Actions token is enough)
 raises the limit from 60 to 5000 requests an hour and is read from the environment only.
 
-**Zero projects is a state.** Right now no repository of yours publishes the file, so Plate 04 shows
-the six curated builds plus an explicit statement of what is missing, the sync date and the count of
+**Zero projects is a state.** A repository reaches Plate 04 only with `PORTFOLIO.md` in its root. Until
+one does, the plate shows an explicit statement of what is missing, the sync date and the count of
 repositories checked. Nothing is invented and nothing is hardcoded as a demo.
 
 ## Deploying

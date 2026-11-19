@@ -38,7 +38,7 @@ project list that has to be edited by hand goes stale the week after it is writt
 
 ## Solution
 Content and presentation are separated in three places. `lib/site.ts` holds the copy, roles, skills
-and contact details. `lib/curated.ts` holds the hand-written case studies. And any repository that
+and contact details. `lib/curated.ts` is where a build with no repository would be written by hand, and it is empty today — everything on the plate publishes its own `PORTFOLIO.md`. And any repository that
 carries a `PORTFOLIO.md` in its root is picked up by `tools/sync.ts`, validated against the schema in
 `lib/portfolio.ts`, measured for its real image sizes and merged into `content/projects.json` — one
 `Case` model, so the same renderer designs a curated plate entry and a GitHub-driven one. No

@@ -1,13 +1,34 @@
+'use client';
+
+import { useState } from 'react';
 import type { Case } from '@/lib/feed';
 import Shot from './Shot';
 
 /* A repository published through PORTFOLIO.md, set as an index row rather than
-   a plate: same type roles, same hairline rules, same stack chips. */
+   a plate: same type roles, same hairline rules, same stack chips. A project
+   with several photos shows one at a time — the first by default — and the
+   arrows under it move through the rest. */
 export default function FeedCard({ c, index }: { c: Case; index: number }) {
-  const cover = c.images[0];
+  const [at, setAt] = useState(0);
+  const last = c.images.length - 1;
+  const cover = c.images[Math.min(at, Math.max(last, 0))];
+
+  const step = (d: number) => setAt((cur) => (cur + d < 0 ? last : cur + d > last ? 0 : cur + d));
+
   return (
     <li className={`repo-row${cover ? '' : ' repo-row--noimg'}`} style={{ transitionDelay: `${index * 42}ms` }}>
-      {cover ? <div className="repo-thumb"><Shot img={cover} /></div> : null}
+      {cover ? (
+        <div className="repo-thumb">
+          <Shot img={cover} />
+          {last > 0 ? (
+            <div className="repo-carousel">
+              <button type="button" onClick={() => step(-1)} aria-label={`Previous photo of ${c.title}`}>&#8592;</button>
+              <span aria-live="polite">{`${at + 1} / ${c.images.length}`}</span>
+              <button type="button" onClick={() => step(1)} aria-label={`Next photo of ${c.title}`}>&#8594;</button>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="repo-body">
         <p className="repo-title">

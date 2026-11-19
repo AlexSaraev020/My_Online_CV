@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { LIMITS, blocks, isSafeImage, parse, resolveImage } from '../lib/portfolio.ts';
+import { LIMITS, blocks, isSafeImage, parse, resolveImage, sizeFromBytes } from '../lib/portfolio.ts';
 import type { Feed } from '../lib/portfolio.ts';
 
 const FIX = (name: string) => fs.readFileSync(path.join(import.meta.dirname, 'fixtures', name), 'utf8');
@@ -119,6 +119,24 @@ test('relative images resolve against the repository and branch that were read',
     'https://raw.githubusercontent.com/a/b/release/v2/deep/shot.jpg'
   );
   assert.equal(isSafeImage('..\\escape\\cover.png'), false);
+});
+
+test('image geometry is read out of the file header, and a JPEG is read from its SOF bytes', () => {
+  const jpeg = Buffer.from([
+    0xff, 0xd8,                                                   /* SOI */
+    0xff, 0xe0, 0x00, 0x10, ...Array(14).fill(0x20),              /* APP0, 16-byte segment */
+    0xff, 0xc0, 0x00, 0x11, 0x08, 0x07, 0xd0, 0x0b, 0x40, 0x03,   /* SOF0: precision 8, 2000 high, 2880 wide */
+    ...Array(24).fill(0x00),
+    0xff, 0xda, 0x00, 0x0c, ...Array(10).fill(0x00),              /* SOS */
+  ]);
+  assert.deepEqual(sizeFromBytes(jpeg), { w: 2880, h: 2000 });
+
+  const png = Buffer.alloc(24);
+  Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(png, 0);
+  png.writeUInt32BE(13, 8); png.write('IHDR', 12); png.writeUInt32BE(640, 16); png.writeUInt32BE(400, 20);
+  assert.deepEqual(sizeFromBytes(png), { w: 640, h: 400 });
+
+  assert.equal(sizeFromBytes(Buffer.from('not an image at all')), null);
 });
 
 test('the offline sync publishes valid fixtures and skips the broken one', () => {

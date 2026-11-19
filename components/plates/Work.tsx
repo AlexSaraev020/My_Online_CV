@@ -18,8 +18,8 @@ export default function Work({ curated }: { curated: Case[] }) {
         <PlateKicker n={4} label="selected work" />
         <Words className="sec-title plate-title" text={plateHeadline()} />
         <p className="sec-note">
-          The CV engagements first, then whatever a repository publishes through PORTFOLIO.md. Where a
-          build has a screenshot it is the real interface; the rest are diagrams of the build.
+          Every build here publishes its own PORTFOLIO.md and arrives through the synchroniser. Where a
+          build has screenshots they are its real interface, and the arrows move through them.
         </p>
       </header>
 

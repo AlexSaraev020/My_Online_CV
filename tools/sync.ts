@@ -20,7 +20,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { CURATED } from '../lib/curated.ts';
-import { parse, resolveImage, type Feed, type FeedProject } from '../lib/portfolio.ts';
+import { parse, resolveImage, sizeFromBytes, type Feed, type FeedProject } from '../lib/portfolio.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const argv = process.argv.slice(2);
@@ -162,39 +162,6 @@ async function readPortfolioFile(repo: Repo): Promise<{ text: string; sha: strin
 }
 
 /* ------------------------------------------------- measured images -- */
-function sizeFromBytes(buf: Buffer): { w: number; h: number } | null {
-  if (buf.length < 12) return null;
-  if (buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
-    return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
-  }
-  if (buf.subarray(0, 4).toString() === 'RIFF' && buf.subarray(8, 12).toString() === 'WEBP') {
-    let off = 12;
-    while (off + 8 <= buf.length) {
-      const four = buf.subarray(off, off + 4).toString();
-      const size = buf.readUInt32LE(off + 4);
-      const d = buf.subarray(off + 8, off + 8 + size);
-      if (four === 'VP8X') return { w: d.readUIntLE(4, 3) + 1, h: d.readUIntLE(7, 3) + 1 };
-      if (four === 'VP8L') { const v = d.readUInt32LE(1); return { w: (v & 0x3fff) + 1, h: ((v >> 14) & 0x3fff) + 1 }; }
-      if (four === 'VP8 ') return { w: d.readUInt16LE(6) & 0x3fff, h: d.readUInt16LE(8) & 0x3fff };
-      off += 8 + size + (size & 1);
-    }
-    return null;
-  }
-  if (buf.subarray(0, 3).toString() === 'GIF') return { w: buf.readUInt16LE(6), h: buf.readUInt16LE(8) };
-  if (buf[0] === 0xff && buf[1] === 0xd8) {
-    let off = 2;
-    while (off + 9 < buf.length) {
-      if (buf[off] !== 0xff) { off++; continue; }
-      const marker = buf[off + 1];
-      if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc8 && marker !== 0xcc) {
-        return { w: buf.readUInt16BE(off + 5), h: buf.readUInt16BE(off + 3) };
-      }
-      off += 2 + buf.readUInt16BE(off + 2);
-    }
-  }
-  return null;
-}
-
 /* A ranged read of the first 64 KB is enough to read PNG / JPEG / WEBP / GIF
    headers, so image geometry comes from the file and not from a guess. An
    unreadable image is dropped; a readable one of unknown format is kept and

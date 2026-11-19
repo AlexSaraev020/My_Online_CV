@@ -264,6 +264,42 @@ export function isSafeImage(p: unknown): boolean {
   return /\.(png|jpe?g|webp|gif|svg)$/i.test(s) && !s.includes('..');
 }
 
+/* Geometry read straight out of the file header, so a screenshot never gets a
+   guessed box. Returns null for a format it does not know. */
+export function sizeFromBytes(buf: Buffer): { w: number; h: number } | null {
+  if (buf.length < 12) return null;
+  if (buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+    return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+  }
+  if (buf.subarray(0, 4).toString() === 'RIFF' && buf.subarray(8, 12).toString() === 'WEBP') {
+    let off = 12;
+    while (off + 8 <= buf.length) {
+      const four = buf.subarray(off, off + 4).toString();
+      const size = buf.readUInt32LE(off + 4);
+      const d = buf.subarray(off + 8, off + 8 + size);
+      if (four === 'VP8X') return { w: d.readUIntLE(4, 3) + 1, h: d.readUIntLE(7, 3) + 1 };
+      if (four === 'VP8L') { const v = d.readUInt32LE(1); return { w: (v & 0x3fff) + 1, h: ((v >> 14) & 0x3fff) + 1 }; }
+      if (four === 'VP8 ') return { w: d.readUInt16LE(6) & 0x3fff, h: d.readUInt16LE(8) & 0x3fff };
+      off += 8 + size + (size & 1);
+    }
+    return null;
+  }
+  if (buf.subarray(0, 3).toString() === 'GIF') return { w: buf.readUInt16LE(6), h: buf.readUInt16LE(8) };
+  if (buf[0] === 0xff && buf[1] === 0xd8) {
+    let off = 2;
+    while (off + 9 < buf.length) {
+      if (buf[off] !== 0xff) { off++; continue; }
+      const marker = buf[off + 1];
+      if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc8 && marker !== 0xcc) {
+        /* SOF layout: FF Cx | 2-byte length | precision | 2-byte height | 2-byte width */
+        return { w: buf.readUInt16BE(off + 7), h: buf.readUInt16BE(off + 5) };
+      }
+      off += 2 + buf.readUInt16BE(off + 2);
+    }
+  }
+  return null;
+}
+
 export function resolveImage(p: string, repoUrl: string, ref: string, sha?: string): string | null {
   const s = String(p).trim();
   if (/^https:\/\//i.test(s)) return s;
