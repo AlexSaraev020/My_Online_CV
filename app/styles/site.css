@@ -444,13 +444,20 @@ html[data-js="on"] .stagger > *.in { opacity: 1; transform: none; }
   gap: var(--s-5) clamp(20px, 3vw, 48px); align-items: start;
   padding: var(--s-5) 0; border-bottom: 1px solid var(--rule-soft);
 }
-.repo-thumb { border: 1px solid var(--rule); background: var(--graphite); }
+.repo-thumb { position: relative; border: 1px solid var(--rule); background: var(--graphite); }
 .repo-thumb .pv { display: block; width: 100%; height: auto; aspect-ratio: 640 / 400; }
-/* one photo visible at a time: the arrows are buttons, so the keyboard reaches them */
-.repo-carousel { display: flex; align-items: center; gap: var(--s-2); margin-top: var(--s-3); }
-.repo-carousel button { display: grid; place-items: center; min-width: 44px; min-height: 44px;color: var(--mint); background: var(--graphite); border: 1px solid var(--rule-cyan); border-radius: var(--r-3); font: 500 15px/1 var(--font-mono); cursor: pointer; }
-.repo-carousel button:hover { color: var(--fg); background: var(--ink-3); border-color: var(--mint); }
-.repo-carousel span { flex: 1; text-align: center; font: 400 var(--fs-cap)/1 var(--font-mono); letter-spacing: var(--ls-cap); text-transform: uppercase; color: var(--fg-3); }
+/* one photo at a time, and the controls sit on the photo itself: two edge chips
+   and a count instead of a control bar bolted under the frame. Real <button>s, so
+   the keyboard reaches them. */
+.repo-carousel { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 var(--s-2); }
+.repo-carousel button { display: grid; place-items: center; width: 44px; height: 44px; color: var(--mint); background: rgba(11, 14, 18, .58); border: 1px solid rgba(66, 227, 168, .38); border-radius: 50%; font: 500 16px/1 var(--font-mono); cursor: pointer; backdrop-filter: blur(5px); transition: background var(--d-1) var(--e-out), border-color var(--d-1) var(--e-out), color var(--d-1) var(--e-out), opacity var(--d-1) var(--e-out); }
+.repo-carousel button:hover, .repo-carousel button:focus-visible { background: rgba(11, 14, 18, .86); border-color: var(--mint); color: var(--fg); }
+.repo-carousel span { position: absolute; left: 50%; bottom: var(--s-2); transform: translateX(-50%); padding: 5px var(--s-3); background: rgba(11, 14, 18, .58); border: 1px solid rgba(233, 237, 242, .18); border-radius: 999px; backdrop-filter: blur(5px); font: 400 var(--fs-cap)/1 var(--font-mono); letter-spacing: var(--ls-cap); color: var(--fg-2); }
+/* a mouse finds the arrows when it reaches the photo; a finger always sees them */
+@media (hover: hover) and (pointer: fine) {
+  .repo-carousel button { opacity: 0; }
+  .repo-thumb:hover .repo-carousel button, .repo-carousel button:focus-visible { opacity: 1; }
+}
 .repo-body { display: grid; gap: var(--s-3); }
 .repo-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-3); }
 .repo-title b, .repo-title a { font-family: var(--font-display); font-variation-settings: 'opsz' 30, 'wdth' 82, 'wght' 700; font-size: clamp(24px, 2.2vw, 38px); line-height: 1.02; letter-spacing: -0.026em; color: var(--fg); }
