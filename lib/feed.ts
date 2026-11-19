@@ -125,7 +125,9 @@ export function neighbours(id: string): { prev: Case; next: Case; index: number;
 
 /* the plate headline counts what is genuinely on the plate, so it cannot go stale */
 export function plateHeadline(): string {
-  return `${CASES.length} builds. ${CASES.length} different problems.`;
+  const n = CASES.length;
+  const one = n === 1;
+  return `${n} build${one ? '' : 's'}. ${n} different problem${one ? '' : 's'}.`;
 }
 
 /* which repositories were looked at and why they are not on the plate */
