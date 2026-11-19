@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-19T10:49:07.889Z",
+    "generatedAt": "2026-11-19T11:17:54.327Z",
     "user": "AlexSaraev020",
     "accountRepos": 10,
     "eligible": 2,
@@ -40,9 +40,75 @@
     ],
     "warnings": [],
     "partial": false,
-    "apiCallsRemaining": 4983
+    "apiCallsRemaining": 4991
   },
   "projects": [
+    {
+      "slug": "signal-field-issue-01",
+      "name": "Signal Field — Issue 01",
+      "subtitle": "An online CV laid out as a magazine issue, with a field that re-forms as you scroll",
+      "description": "The interactive portfolio and online CV of Alexandru Saraev: seven art-directed plates, one procedural 3D field, case studies as real pages, and a project list that fills itself from PORTFOLIO.md files in GitHub repositories.",
+      "category": "Web platform",
+      "status": "live",
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Three.js",
+        "Zod",
+        "CSS custom properties",
+        "GitHub Actions"
+      ],
+      "tags": [
+        "portfolio",
+        "3d",
+        "static"
+      ],
+      "year": "2026",
+      "role": "Solo — art direction, interface, 3D layer, data pipeline, static build",
+      "live": "https://alexsaraev020.github.io/My_Online_CV/",
+      "repo": "https://github.com/AlexSaraev020/My_Online_CV",
+      "updated": "2026-11-19",
+      "sections": {
+        "overview": "A CV that reads as an issue of a magazine rather than as a form: a cover, seven plates, and a\nprocedural field of bars, dust and a sculptural band that responds to how far you have read. It is\na static export — `next build` writes `out/` and any static host serves it.",
+        "problem": "Most online CVs are a list of jobs beside a list of technologies. The interesting question — what\nkind of builder am I — is answered by how the page is made, not by the bullet points on it. And a\nproject list that has to be edited by hand goes stale the week after it is written.",
+        "solution": "Content and presentation are separated in three places. `lib/site.ts` holds the copy, roles, skills\nand contact details. `lib/curated.ts` is where a build with no repository would be written by hand, and it is empty today — everything on the plate publishes its own `PORTFOLIO.md`. And any repository that\ncarries a `PORTFOLIO.md` in its root is picked up by `tools/sync.ts`, validated against the schema in\n`lib/portfolio.ts`, measured for its real image sizes and merged into `content/projects.json` — one\n`Case` model, so the same renderer designs a curated plate entry and a GitHub-driven one. No\ncomponent edits are needed to publish a project.",
+        "features": "- Seven plates: cover, approach, capabilities, work, process, CV, contact\n- A WebGL field built from instanced bars, signal dust and a sculptural band, driven by scroll\n  progress rather than by a fixed timeline\n- Case studies as prerendered pages, each with its own title and description\n- A GitHub Actions workflow that regenerates the project feed every six hours and proves the site\n  still builds from it\n- A documented `PORTFOLIO.md` schema — Zod-validated, with the parser under test\n- Reduced-motion and no-JavaScript paths that show the same content",
+        "architecture": "Next.js App Router with `output: 'export'`, so there is no server, no API routes and no database —\nwhich is also why no GitHub credential can reach the browser. Three.js comes in through\n@react-three/fiber; `lib/field/state.ts` is the only meeting point between the DOM layer and WebGL.\nPlain CSS with tokens for palette, type scale, spacing and motion; no UI library.",
+        "challenges": "Scroll choreography over a WebGL canvas: the reveals, the folio rail and the field all needed one\nsource of scroll truth, and passing numbers through React state re-rendered the page on every frame.\nThe `PORTFOLIO.md` gate is deliberately narrow — the file's presence in a repository root is the\nonly thing that decides whether a project appears — because every wider rule turned into metadata\nthat had to be maintained by hand.",
+        "results": "Served as a static site from GitHub Pages, with the project feed regenerated on a schedule and the\nschema itself under test.",
+        "future": "The feed currently reads one GitHub account. A second source — local projects with no repository —\nis not planned until there is a reason for it."
+      },
+      "extras": [],
+      "repoUrl": "https://github.com/AlexSaraev020/My_Online_CV",
+      "repoName": "My_Online_CV",
+      "branch": "main",
+      "publishedFrom": "AlexSaraev020/My_Online_CV",
+      "images": [
+        {
+          "kind": "cover",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/cover.jpg",
+          "path": "docs/portfolio/cover.jpg",
+          "w": 2880,
+          "h": 2000
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/work-plate.jpg",
+          "path": "docs/portfolio/work-plate.jpg",
+          "w": 2880,
+          "h": 2000
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/case-study.jpg",
+          "path": "docs/portfolio/case-study.jpg",
+          "w": 2880,
+          "h": 2000
+        }
+      ],
+      "warnings": []
+    },
     {
       "slug": "wevibe",
       "name": "WeVibe",
@@ -121,72 +187,6 @@
           "kind": "gallery",
           "src": "https://raw.githubusercontent.com/AlexSaraev020/WeVibe_NextJS/main/docs/portfolio/wevibe-login.jpg",
           "path": "docs/portfolio/wevibe-login.jpg",
-          "w": 2880,
-          "h": 2000
-        }
-      ],
-      "warnings": []
-    },
-    {
-      "slug": "signal-field-issue-01",
-      "name": "Signal Field — Issue 01",
-      "subtitle": "An online CV laid out as a magazine issue, with a field that re-forms as you scroll",
-      "description": "The interactive portfolio and online CV of Alexandru Saraev: seven art-directed plates, one procedural 3D field, case studies as real pages, and a project list that fills itself from PORTFOLIO.md files in GitHub repositories.",
-      "category": "Web platform",
-      "status": "live",
-      "stack": [
-        "Next.js",
-        "React",
-        "TypeScript",
-        "Three.js",
-        "Zod",
-        "CSS custom properties",
-        "GitHub Actions"
-      ],
-      "tags": [
-        "portfolio",
-        "3d",
-        "static"
-      ],
-      "year": "2026",
-      "role": "Solo — art direction, interface, 3D layer, data pipeline, static build",
-      "live": "https://alexsaraev020.github.io/My_Online_CV/",
-      "repo": "https://github.com/AlexSaraev020/My_Online_CV",
-      "updated": "2026-11-19",
-      "sections": {
-        "overview": "A CV that reads as an issue of a magazine rather than as a form: a cover, seven plates, and a\nprocedural field of bars, dust and a sculptural band that responds to how far you have read. It is\na static export — `next build` writes `out/` and any static host serves it.",
-        "problem": "Most online CVs are a list of jobs beside a list of technologies. The interesting question — what\nkind of builder am I — is answered by how the page is made, not by the bullet points on it. And a\nproject list that has to be edited by hand goes stale the week after it is written.",
-        "solution": "Content and presentation are separated in three places. `lib/site.ts` holds the copy, roles, skills\nand contact details. `lib/curated.ts` holds the hand-written case studies. And any repository that\ncarries a `PORTFOLIO.md` in its root is picked up by `tools/sync.ts`, validated against the schema in\n`lib/portfolio.ts`, measured for its real image sizes and merged into `content/projects.json` — one\n`Case` model, so the same renderer designs a curated plate entry and a GitHub-driven one. No\ncomponent edits are needed to publish a project.",
-        "features": "- Seven plates: cover, approach, capabilities, work, process, CV, contact\n- A WebGL field built from instanced bars, signal dust and a sculptural band, driven by scroll\n  progress rather than by a fixed timeline\n- Case studies as prerendered pages, each with its own title and description\n- A GitHub Actions workflow that regenerates the project feed every six hours and proves the site\n  still builds from it\n- A documented `PORTFOLIO.md` schema — Zod-validated, with the parser under test\n- Reduced-motion and no-JavaScript paths that show the same content",
-        "architecture": "Next.js App Router with `output: 'export'`, so there is no server, no API routes and no database —\nwhich is also why no GitHub credential can reach the browser. Three.js comes in through\n@react-three/fiber; `lib/field/state.ts` is the only meeting point between the DOM layer and WebGL.\nPlain CSS with tokens for palette, type scale, spacing and motion; no UI library.",
-        "challenges": "Scroll choreography over a WebGL canvas: the reveals, the folio rail and the field all needed one\nsource of scroll truth, and passing numbers through React state re-rendered the page on every frame.\nThe `PORTFOLIO.md` gate is deliberately narrow — the file's presence in a repository root is the\nonly thing that decides whether a project appears — because every wider rule turned into metadata\nthat had to be maintained by hand.",
-        "results": "Served as a static site from GitHub Pages, with the project feed regenerated on a schedule and the\nschema itself under test.",
-        "future": "The feed currently reads one GitHub account. A second source — local projects with no repository —\nis not planned until there is a reason for it."
-      },
-      "extras": [],
-      "repoUrl": "https://github.com/AlexSaraev020/My_Online_CV",
-      "repoName": "My_Online_CV",
-      "branch": "main",
-      "publishedFrom": "AlexSaraev020/My_Online_CV",
-      "images": [
-        {
-          "kind": "cover",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/cover.jpg",
-          "path": "docs/portfolio/cover.jpg",
-          "w": 2880,
-          "h": 2000
-        },
-        {
-          "kind": "gallery",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/work-plate.jpg",
-          "path": "docs/portfolio/work-plate.jpg",
-          "w": 2880,
-          "h": 2000
-        },
-        {
-          "kind": "gallery",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/My_Online_CV/main/docs/portfolio/case-study.jpg",
-          "path": "docs/portfolio/case-study.jpg",
           "w": 2880,
           "h": 2000
         }
