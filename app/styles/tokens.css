@@ -1,0 +1,95 @@
+/* ==========================================================================
+   SIGNAL FIELD — ISSUE 01 · design tokens
+   Palette derived from the supplied avatar asset (assets/avatar.png):
+   near-black blue ink disc, mint-teal signal glyph, warm sand skin tone,
+   off-white shirt, cool grey code lines. Editorial additions are the deeper
+   navy/graphite grounds and a cooler cyan reserved for hairline rules and
+   outline type.
+   ========================================================================== */
+:root {
+  /* ---- colour: ink world ---- */
+  --ink:        #0b0e12;   /* page ground */
+  --navy:       #0a1017;   /* deeper plate ground */
+  --graphite:   #161d27;   /* raised panel */
+  --ink-2:      #11161e;
+  --ink-3:      #182029;
+  --fg:         #e9edf2;   /* primary text      16.9:1 on ink */
+  --fg-2:       #b5bec9;   /* secondary text     9.9:1 */
+  --fg-3:       #8a94a0;   /* meta / captions    6.0:1 */
+  --mint:       #42e3a8;   /* primary signal    11.4:1 */
+  --mint-2:     #25b986;   /* pressed / deep accent */
+  --cyan:       #63dbe8;   /* hairlines + outline type only, 11.2:1 */
+  --sand:       #f0a97a;   /* warm counterweight 9.7:1 */
+  --rule:       rgba(233, 237, 242, 0.14);
+  --rule-soft:  rgba(233, 237, 242, 0.07);
+  --rule-cyan:  rgba(99, 219, 232, 0.42);
+  --signal-soft: rgba(66, 227, 168, 0.14);
+  --scrim:      rgba(10, 14, 19, 0.82);   /* behind type that crosses an image */
+
+  /* ---- colour: paper world (the CV sheet) ---- */
+  --paper:      #efede6;
+  --paper-2:    #e4e1d8;
+  --paper-ink:  #12161d;   /* 15.4:1 on paper */
+  --paper-fg-2: #4a535f;   /*  6.0:1 on paper */
+  --paper-rule: rgba(18, 22, 29, 0.16);
+  --paper-mint: #16764f;   /* mint legible on light ground, 5.5:1 */
+
+  /* ---- type: one variable grotesque across its axes, plus a mono ---- */
+  --font-display: 'Bricolage Grotesque', 'Archivo', 'Helvetica Neue', Helvetica, sans-serif;
+  --font-body:    'Bricolage Grotesque', 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* the same face, four axis settings, used as four typographic roles */
+  --ax-plate:  'opsz' 96, 'wdth' 75, 'wght' 750;   /* ultra-condensed plates */
+  --ax-mast:   'opsz' 14, 'wdth' 100, 'wght' 500;  /* expanded masthead */
+  --ax-body:   'opsz' 18, 'wdth' 94, 'wght' 400;
+  --ax-num:    'opsz' 96, 'wdth' 75, 'wght' 300;   /* oversized decorative numerals */
+
+  /* editorial scale: plate type is deliberately oversized, body stays 17-18 */
+  --fs-cap:   12px;   /* mono eyebrows only — never body or caption copy */
+  --fs-small: 16px;   /* floor for secondary text */
+  --fs-body:  17px;
+  --fs-lead:  20px;
+  --fs-h3:    22px;
+  --fs-h2:    clamp(30px, 3.6vw, 50px);
+  --fs-h1:    clamp(44px, 6.4vw, 88px);
+  --fs-plate: clamp(48px, 9.2vw, 134px);
+
+  --lh-tight: 0.98;
+  --lh-head:  1.04;
+  --lh-body:  1.6;
+  --lh-small: 1.5;
+
+  --ls-plate:  -0.035em;
+  --ls-display: -0.03em;
+  --ls-h1:      -0.02em;
+  --ls-h2:      -0.018em;
+  --ls-h3:      -0.01em;
+  --ls-cap:      0.16em;  /* all caps: floor is 0.06em */
+  --ls-mast:     0.18em;   /* editorial masthead: wide, but word shapes survive */
+  --ls-small:    0.02em;
+
+  /* ---- spacing: multiples of 4/8, with deliberate dramatic gaps ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  --s-9: 96px; --s-10: 128px; --s-11: 192px; --s-12: 260px;
+  --gutter: clamp(20px, 4.2vw, 76px);
+  --trim: 16px;              /* the printer's frame inset */
+  --maxw: 1480px;
+  --bar-h: 68px;
+
+  /* ---- radii: editorial means square, not soft ---- */
+  --r-1: 2px;
+  --r-2: 3px;
+  --r-3: 5px;
+
+  /* ---- motion ---- */
+  --e-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-in:  cubic-bezier(0.7, 0, 0.84, 0);
+  --e-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --d-1: 160ms;
+  --d-2: 240ms;
+  --d-3: 360ms;
+  --d-4: 520ms;
+  --stagger: 42ms;
+}

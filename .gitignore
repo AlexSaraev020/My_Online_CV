@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+tools/.cache/
+next-env.d.ts
+*.tsbuildinfo
+
+# local tooling artifacts
+.playwright-mcp/
+.claude/

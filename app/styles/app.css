@@ -1,0 +1,48 @@
+/* ==========================================================================
+   app.css — the only additions on top of the design system in site.css.
+   The plates, the trim frame, the type roles and the palette are unchanged;
+   these rules cover the two structural differences a routed app introduces:
+   a case study is a page now rather than a dialog, and the open controls on
+   the work plate are links rather than buttons.
+   ========================================================================== */
+
+/* Case studies: the same sheet design, standing in the page flow. */
+main > .case { max-height: none; width: min(1240px, calc(100% - 2 * var(--gutter))); margin: clamp(48px, 9vh, 110px) auto 0; }
+main > .case > .case-inner { max-height: none; overflow: visible; }
+
+/* Anchors inherit the mint link colour; the plate's own title colour must not. */
+a.work-open, a.case-close { color: var(--fg); }
+a.work-open:hover h3 { color: var(--mint); }
+
+/* Prev / next on a case page are links, so they take the button's shape. */
+.case-foot a.btn { display: inline-flex; align-items: center; justify-content: center; }
+
+/* The cover's two calls to action navigate rather than scroll on a small screen. */
+.hero-actions a.btn { text-align: center; }
+
+/* The plate menu is made of links now, so it takes the shape the buttons had. */
+.sheet-list a {
+  display: flex; align-items: baseline; gap: var(--s-4); width: 100%; min-height: 44px;
+  padding: 10px 0; border-bottom: 1px solid var(--rule-soft);
+  text-align: left; color: var(--fg);
+  font-family: var(--font-display); font-variation-settings: var(--ax-plate);
+  font-size: var(--fs-h2); line-height: 1.05; letter-spacing: var(--ls-h2);
+}
+.sheet-list a:hover { color: var(--mint); }
+
+/* The 3D layer is mounted by React Three Fiber inside .field-layer. */
+.field-layer canvas { opacity: 0; transition: opacity var(--d-4) var(--e-soft); }
+html[data-field="on"] .field-layer canvas { opacity: 1; }
+
+/* Skip link and the live region are rendered by React rather than appended. */
+.sr { margin: 0; }
+
+/* The GitHub account line is a real tap target on a phone, not just a word in
+   the kicker it sits inside. */
+@media (max-width: 767px) {
+  .repo-profile { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > .case > .case-inner { animation: none; }
+}

@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "generatedAt": "2026-11-17T00:00:56.424Z",
+    "user": "AlexSaraev020",
+    "accountRepos": 9,
+    "eligible": 0,
+    "skipped": [
+      {
+        "repo": "AlexSaraev020/impeccable",
+        "reason": "fork"
+      },
+      {
+        "repo": "AlexSaraev020/free-search-mcp",
+        "reason": "fork"
+      },
+      {
+        "repo": "AlexSaraev020/WeVibe_NextJS",
+        "reason": "already curated on the work plate — remove it from lib/curated.ts to drive it from PORTFOLIO.md"
+      },
+      {
+        "repo": "AlexSaraev020/Alex_Saraev_CV_Online",
+        "reason": "no PORTFOLIO.md in the repository root"
+      },
+      {
+        "repo": "AlexSaraev020/World_Wide_Lens",
+        "reason": "no PORTFOLIO.md in the repository root"
+      },
+      {
+        "repo": "AlexSaraev020/Calculator_App",
+        "reason": "no PORTFOLIO.md in the repository root"
+      },
+      {
+        "repo": "AlexSaraev020/MERN_Steam_App",
+        "reason": "already curated on the work plate — remove it from lib/curated.ts to drive it from PORTFOLIO.md"
+      },
+      {
+        "repo": "AlexSaraev020/Weather_App",
+        "reason": "no PORTFOLIO.md in the repository root"
+      },
+      {
+        "repo": "AlexSaraev020/MyGamingWebsite",
+        "reason": "no PORTFOLIO.md in the repository root"
+      }
+    ],
+    "warnings": [],
+    "partial": false,
+    "apiCallsRemaining": 54
+  },
+  "projects": []
+}

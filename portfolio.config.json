@@ -1,0 +1,9 @@
+{
+  "githubUser": "AlexSaraev020",
+  "feed": "content/projects.json",
+  "cacheDir": "tools/.cache",
+  "includeForks": false,
+  "exclude": [],
+  "maxProjects": 12,
+  "sort": "pushed"
+}

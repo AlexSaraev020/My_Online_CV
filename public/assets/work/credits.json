@@ -1,0 +1,45 @@
+{
+  "note": "Screenshots of Alexandru Saraev's own projects. Downloaded from his repository Alex_Saraev_CV_Online (the earlier version of this CV) on 2026-11-17 and stored locally — the site never hotlinks them. Replace any file with a newer capture and keep the same name, or add a new path in js/data.js.",
+  "files": [
+    {
+      "file": "assets/work/wevibe-1.webp",
+      "project": "WeVibe",
+      "source_repo": "https://github.com/AlexSaraev020/Alex_Saraev_CV_Online",
+      "source_path": "public/images/projects/weVibe/1.webp",
+      "author": "Alexandru Saraev",
+      "measured": { "width": 2559, "height": 1599 }
+    },
+    {
+      "file": "assets/work/gamerslobby-1.webp",
+      "project": "Gamers Lobby",
+      "source_repo": "https://github.com/AlexSaraev020/Alex_Saraev_CV_Online",
+      "source_path": "public/images/projects/gamers_lobby/3.webp",
+      "author": "Alexandru Saraev",
+      "measured": { "width": 2560, "height": 1600 }
+    },
+    {
+      "file": "assets/work/worldwidelens-1.webp",
+      "project": "World Wide Lens",
+      "source_repo": "https://github.com/AlexSaraev020/Alex_Saraev_CV_Online",
+      "source_path": "public/images/projects/world_wide_lens/1.webp",
+      "author": "Alexandru Saraev",
+      "measured": { "width": 2560, "height": 1600 }
+    },
+    {
+      "file": "assets/work/weather-1.webp",
+      "project": "Weather App",
+      "source_repo": "https://github.com/AlexSaraev020/Alex_Saraev_CV_Online",
+      "source_path": "public/images/projects/weather_app/1.webp",
+      "author": "Alexandru Saraev",
+      "measured": { "width": 2560, "height": 1600 }
+    },
+    {
+      "file": "assets/work/calculator-1.webp",
+      "project": "Calculator",
+      "source_repo": "https://github.com/AlexSaraev020/Alex_Saraev_CV_Online",
+      "source_path": "public/images/projects/calculator/1.webp",
+      "author": "Alexandru Saraev",
+      "measured": { "width": 2560, "height": 1600 }
+    }
+  ]
+}

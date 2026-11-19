@@ -1,0 +1,73 @@
+name: Portfolio sync
+
+# Regenerates content/projects.json from every public repository in the
+# configured GitHub account that carries PORTFOLIO.md in its root, then proves
+# the site still builds from it. Nothing here needs a server: the committed
+# JSON file IS the data, and the token never reaches the browser.
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'          # every six hours; see README for the update delay
+  workflow_dispatch:               # run it now, from the Actions tab
+  push:
+    paths:
+      - 'tools/sync.ts'
+      - 'lib/portfolio.ts'
+      - 'lib/curated.ts'
+      - 'portfolio.config.json'
+      - '.github/workflows/portfolio-sync.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portfolio-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: npm ci
+
+      - name: Cache conditional requests
+        uses: actions/cache@v4
+        with:
+          path: tools/.cache
+          key: portfolio-cache-${{ github.ref_name }}
+          restore-keys: portfolio-cache-
+
+      - name: Validate the schema
+        run: npm test
+
+      - name: Build the project feed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # raises the API limit; never reaches the site
+          GITHUB_USER: ${{ vars.PORTFOLIO_GITHUB_USER }}
+        run: npm run sync
+
+      - name: Show what was published and what was skipped
+        run: node -e "const f=require('./content/projects.json').meta;console.log('eligible',f.eligible,'of',f.accountRepos,'repositories');(f.skipped||[]).forEach(s=>console.log('skipped:',s.repo,'-',s.reason));(f.warnings||[]).forEach(w=>console.log('warning:',w));"
+
+      - name: Build the static site
+        run: npm run build
+
+      - name: Commit the feed when it changed
+        run: |
+          if ! git diff --quiet --exit-code -- content/projects.json; then
+            git config user.name "portfolio-sync"
+            git config user.email "portfolio-sync@users.noreply.github.com"
+            git add content/projects.json
+            git commit -m "portfolio: sync projects from PORTFOLIO.md"
+            git push
+            echo "feed updated"
+          else
+            echo "feed unchanged"
+          fi
