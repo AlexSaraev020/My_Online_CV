@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-23T22:37:37.283Z",
+    "generatedAt": "2026-11-23T22:50:33.883Z",
     "user": "AlexSaraev020",
     "accountRepos": 10,
     "eligible": 2,
@@ -40,7 +40,7 @@
     ],
     "warnings": [],
     "partial": false,
-    "apiCallsRemaining": 51
+    "apiCallsRemaining": 42
   },
   "projects": [
     {
@@ -115,13 +115,6 @@
           "path": "docs/portfolio/gamerslobby-profile.jpg",
           "w": 1440,
           "h": 900
-        },
-        {
-          "kind": "gallery",
-          "src": "https://raw.githubusercontent.com/AlexSaraev020/MERN_Steam_App/main/docs/portfolio/gamerslobby-mobile.jpg",
-          "path": "docs/portfolio/gamerslobby-mobile.jpg",
-          "w": 390,
-          "h": 844
         }
       ],
       "warnings": []
