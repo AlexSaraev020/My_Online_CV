@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Block } from '@/lib/portfolio';
 import type { Case } from '@/lib/feed';
 import { neighbours } from '@/lib/feed';
-import { pad } from '@/lib/site';
+import { asset, pad } from '@/lib/site';
 import Shot from './Shot';
 import { PREVIEWS } from './Previews';
 
@@ -109,9 +109,9 @@ export default function CaseArticle({ c }: { c: Case }) {
         </div>
 
         <nav className="case-foot" aria-label="Project navigation">
-          <a className="btn btn-line" href={`/work/${nav.prev.id}`}>Previous — {nav.prev.title}</a>
+          <a className="btn btn-line" href={asset(`/work/${nav.prev.id}`)}>Previous — {nav.prev.title}</a>
           <p className="kicker">{pad(nav.index + 1)} / {pad(nav.total)}</p>
-          <a className="btn btn-solid" href={`/work/${nav.next.id}`}>Next — {nav.next.title}</a>
+          <a className="btn btn-solid" href={asset(`/work/${nav.next.id}`)}>Next — {nav.next.title}</a>
         </nav>
       </div>
     </div>

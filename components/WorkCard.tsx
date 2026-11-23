@@ -3,7 +3,7 @@
 import type { CSSProperties } from 'react';
 import { clearProjectFocus, focusProject } from '@/lib/field/state';
 import type { Case } from '@/lib/feed';
-import { pad } from '@/lib/site';
+import { asset, pad } from '@/lib/site';
 import Shot from './Shot';
 import { PREVIEWS } from './Previews';
 
@@ -24,7 +24,7 @@ export default function WorkCard({ c, index, total }: { c: Case; index: number; 
 
       <a
         className="work-open"
-        href={`/work/${c.id}`}
+        href={asset(`/work/${c.id}`)}
         onPointerOver={() => light(true)}
         onPointerLeave={() => light(false)}
         onFocus={() => light(true)}
