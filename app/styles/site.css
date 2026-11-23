@@ -478,7 +478,9 @@ html[data-js="on"] .stagger > *.in { opacity: 1; transform: none; }
 .case-list li::before { content: "\2014"; position: absolute; left: 0; color: var(--cyan); }
 .case-sub { margin-top: var(--s-3); font-family: var(--font-display); font-variation-settings: 'opsz' 22, 'wdth' 88, 'wght' 650; font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -0.01em; }
 .case-code { margin-top: var(--s-3); padding: var(--s-4); background: var(--graphite); border: 1px solid var(--rule); font: 400 var(--fs-small)/1.6 var(--font-mono); white-space: pre; overflow-x: auto; }
-.case-gallery { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s-4); margin-top: var(--s-4); }
+/* align-items: start — a portrait shot in the row would otherwise stretch every cell
+   to its height and leave the landscape photos floating in empty boxes. */
+.case-gallery { grid-column: 1 / -1; display: grid; align-items: start; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s-4); margin-top: var(--s-4); }
 .case-gallery li { border: 1px solid var(--rule); background: var(--graphite); }
 .repo-title i { font: 400 var(--fs-cap)/1.4 var(--font-mono); font-style: normal; letter-spacing: var(--ls-cap); text-transform: uppercase; color: var(--fg-3); }
 .repo-line { color: var(--fg-2); font-size: var(--fs-body); line-height: var(--lh-body); max-width: 58ch; }
@@ -622,7 +624,9 @@ html[data-js="on"] .stagger > *.in { opacity: 1; transform: none; }
 /* ==========================================================================
    CASE TAKEOVER
    ========================================================================== */
-.case { width: min(1240px, calc(100% - 2 * var(--gutter))); max-height: 90svh; margin: auto; padding: 0; background: var(--navy); color: var(--fg); border: 1px solid var(--rule); overflow: hidden; }
+/* Positioned on purpose: the ambient layer is fixed at z-index 0, and an unpositioned
+   block paints under it, which hid every gallery photo on the case route. */
+.case { position: relative; z-index: 1; width: min(1240px, calc(100% - 2 * var(--gutter))); max-height: 90svh; margin: auto; padding: 0; background: var(--navy); color: var(--fg); border: 1px solid var(--rule); overflow: hidden; }
 .case::backdrop { background: rgba(4, 6, 9, .82); backdrop-filter: blur(8px); }
 .case-inner { display: grid; gap: var(--s-5); padding: clamp(20px, 3vw, 44px); max-height: 90svh; overflow: auto; }
 .case-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: var(--s-4); }
