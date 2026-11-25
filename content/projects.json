@@ -1,9 +1,9 @@
 {
   "meta": {
-    "generatedAt": "2026-11-25T01:45:04.684Z",
+    "generatedAt": "2026-11-25T09:51:51.596Z",
     "user": "AlexSaraev020",
     "accountRepos": 10,
-    "eligible": 2,
+    "eligible": 3,
     "skipped": [
       {
         "repo": "AlexSaraev020/My_Online_CV",
@@ -22,10 +22,6 @@
         "reason": "no PORTFOLIO.md in the repository root"
       },
       {
-        "repo": "AlexSaraev020/World_Wide_Lens",
-        "reason": "no PORTFOLIO.md in the repository root"
-      },
-      {
         "repo": "AlexSaraev020/Calculator_App",
         "reason": "no PORTFOLIO.md in the repository root"
       },
@@ -40,9 +36,89 @@
     ],
     "warnings": [],
     "partial": false,
-    "apiCallsRemaining": 4991
+    "apiCallsRemaining": 42
   },
   "projects": [
+    {
+      "slug": "world-wide-lens",
+      "name": "World Wide Lens",
+      "subtitle": "A world news wire set as a newspaper — four desks, two outlets, one filing per item",
+      "description": "A front page over live RSS: The Guardian and BBC News, filed to four desks and printed as each outlet wrote it — headline, standfirst, opening paragraphs, its own photograph and credit, and a link back. No accounts, no feed, no commentary.",
+      "category": "Web platform",
+      "status": "live",
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "RSS",
+        "Node"
+      ],
+      "tags": [
+        "news",
+        "rss",
+        "editorial",
+        "typography",
+        "monochrome"
+      ],
+      "year": "2026 — present",
+      "role": "Solo — interface, wire parser, typographic system, deployment",
+      "live": "https://world-wide-lens.vercel.app",
+      "repo": "https://github.com/AlexSaraev020/World_Wide_Lens",
+      "updated": "2026-11-25",
+      "sections": {
+        "overview": "World Wide Lens is a world news wire laid out as a newspaper. Four desks — World, Climate, Economy,\nEurope — carry everything two outlets filed, newest first. One item is one filing: the headline, the\nstandfirst, the opening paragraphs, the photograph the outlet filed with it and its credit, the time it\nwas filed, and a link back to the full text.\n\nThere is no account, no favourites, no infinite feed and no ranking. The only editorial act is which\nfiling gets the top of the page and which gets a small card.",
+        "problem": "The first version was a NewsAPI demo: a list of articles with a search box, which is what every news\naggregator already is. The interesting question was not how to fetch more articles but how to make a\nscreen of news that behaves like a printed page — fixed hierarchy, a dateline, a credit line, columns,\nand an end.\n\nTwo constraints came with that. A personal project has to read the wire from somewhere free, with no\nkey and no quota. And a printed page has to survive the wire being short: most of what an RSS feed\ncarries is a headline and one sentence, not an article.",
+        "solution": "`data/wire.ts` reads eight RSS feeds — The Guardian and BBC News, four desks each — and maps every item\ninto one `Story` shape. Guardian's `<description>` carries the article's opening paragraphs as escaped\nHTML, so those filings arrive with a body and take the front page and the desk rails. BBC's carry one\nsentence, so they arrive as briefs and take the **In brief** rail. The layout sorts them without being\ntold to.\n\nThe look is one stylesheet, `styles/editorial.css`, of CSS custom properties: an ink scale, a type\nscale, rules, folio apparatus and motion timings. Every component is Tailwind utilities reading those\ntokens. No colour is used anywhere — a hover changes ink density, never hue.\n\n`data/stories.ts` is a fixture: twelve invented filings with CC-licensed photographs. It is what the\nscreens render when a feed cannot be read, so the layout never comes back empty, and it is labelled as\nplaceholder copy wherever it appears.",
+        "features": "- Live wire from eight RSS feeds, no API key, cached 15 minutes server-side\n- Two outlets, two shapes: filings with paragraphs go to the front page, one-liners go to In brief\n- The lead is chosen, not hardcoded — the longest filing among the twelve newest on the world desk\n- A filing that lands in two of its own feeds prints once, on the first desk it reaches\n- Each item carries the photograph its outlet filed with it, in grayscale, with the credit under it\n- The plate is capped at the width the outlet filed, so it is never scaled up\n- Four desks with a running head that keeps the desk vocabulary on screen while the columns scroll\n- Search over the whole wire with the query as the page's headline and matched terms inverted as ink\n- Search suggestions derived from the topics the wire actually filed most, not a fixed list\n- Filing pages set as a page: headline full width, plate left, standfirst and source block in the\n  margin with the related filings, then the text across the whole measure in three columns\n- A brief says it is a brief instead of repeating its standfirst as if it were an article\n- Live UTC dateline, issue number, colophon — and everything printed in monochrome\n- The fixture keeps the screens rendering when a feed is unreachable",
+        "architecture": "Next.js 14 App Router, all screens server components except the clock, the nameplate and the desk nav.\n`getWire()` fetches the eight feeds in parallel with `next: { revalidate: 900 }`, dedupes by slug, sorts\nby publish time and returns `{ stories, lead, front, briefs }`. Search, related filings and the desk\nsplit are pure functions over that list, so they run identically on the live wire and on the fixture.\n\nThe parser is regex over the item blocks rather than an XML library: `decode` un-escapes entities and\nCDATA, `paragraphs` splits the description on `<p>` blocks when the outlet escaped them and falls back\nto the whole string when it did not, and `imageOf` takes the largest picture the item offers. BBC's\nimage host serves any width under `/standard/<n>/`, so its 240-wide thumbnail is asked at 768; Guardian\nsigns every width, so the largest one in the item is taken and its height is read from the crop box the\nhost names in the URL.\n\nTwo self-checks run without a network: `data/stories.check.ts` guards the fixture and the column counts\nthe front grid is written against, `data/wire.check.ts` parses two real feed items captured off the wire\nand asserts both come out as the same `Story`.",
+        "challenges": "The wire is messier than a demo. Guardian files the same story into two of its own feeds, so the front\npage printed it twice until items were deduped by slug — 280 items became 236. Guardian's `<description>`\nholds escaped `<p>` tags while BBC's holds plain text, so the paragraph splitter has to handle both\nwithout an XML parser. Guardian's image URLs carry `&amp;` inside them and are signed per width, so the\nlargest variant has to be selected from the item rather than requested.\n\nThree layout defects were found by measuring twelve live filings rather than by looking at one:\n\n- `figcaption` was the second cell of the same grid row as the image, so the credit printed **beside**\n  the photograph on 12 of 12 pages.\n- `.photo { width: 100% }` in a 792px column rendered a 700px picture at 792px — a 1.13× upscale, on\n  12 of 12. The plate is now capped at the width the outlet filed.\n- `.ink:hover` re-assigns `--fg-soft` from `--ink-2`, which the dark-mode block never inverted, so on a\n  dark page the standfirst and the folio line went to `#18181b` on `#09090b` — 1.12:1, i.e. the text\n  vanished on hover.\n\nGrid rows were also the quiet problem: a row is as tall as its tallest card, so a card with two lines of\nstandfirst was stretched to the height of one with eight, and the filing page's margin column came up\nhundreds of pixels shorter than the plate beside it. Both now carry content down to the same line.",
+        "future": "Filings from different outlets that describe the same event are still printed as two separate items —\nclustering them into one event with its differing leads is the next real feature. Desk pages print every\nitem the desk received, which at 53 filings makes a 13,000px column; the desk needs a page count. The\nold NewsAPI layer is still in the repository and wired to nothing. The two image hosts the wire asks for\nshould replace the wildcard in `next.config.mjs`."
+      },
+      "extras": [],
+      "repoUrl": "https://github.com/AlexSaraev020/World_Wide_Lens",
+      "repoName": "World_Wide_Lens",
+      "branch": "main",
+      "publishedFrom": "AlexSaraev020/World_Wide_Lens",
+      "images": [
+        {
+          "kind": "cover",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/World_Wide_Lens/main/docs/portfolio/wwl-front.jpg",
+          "path": "docs/portfolio/wwl-front.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/World_Wide_Lens/main/docs/portfolio/wwl-wire.jpg",
+          "path": "docs/portfolio/wwl-wire.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/World_Wide_Lens/main/docs/portfolio/wwl-filing.jpg",
+          "path": "docs/portfolio/wwl-filing.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/World_Wide_Lens/main/docs/portfolio/wwl-search.jpg",
+          "path": "docs/portfolio/wwl-search.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/World_Wide_Lens/main/docs/portfolio/wwl-desk.jpg",
+          "path": "docs/portfolio/wwl-desk.jpg",
+          "w": 1440,
+          "h": 900
+        }
+      ],
+      "warnings": []
+    },
     {
       "slug": "gamerslobby",
       "name": "GamersLobby",
