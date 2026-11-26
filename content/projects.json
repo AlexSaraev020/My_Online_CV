@@ -1,9 +1,9 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T16:01:42.030Z",
+    "generatedAt": "2026-11-26T19:51:38.649Z",
     "user": "AlexSaraev020",
     "accountRepos": 10,
-    "eligible": 3,
+    "eligible": 4,
     "skipped": [
       {
         "repo": "AlexSaraev020/My_Online_CV",
@@ -26,19 +26,111 @@
         "reason": "no PORTFOLIO.md in the repository root"
       },
       {
-        "repo": "AlexSaraev020/Weather_App",
-        "reason": "no PORTFOLIO.md in the repository root"
-      },
-      {
         "repo": "AlexSaraev020/MyGamingWebsite",
         "reason": "no PORTFOLIO.md in the repository root"
       }
     ],
     "warnings": [],
     "partial": false,
-    "apiCallsRemaining": 4991
+    "apiCallsRemaining": 49
   },
   "projects": [
+    {
+      "slug": "easyweather",
+      "name": "EasyWeather",
+      "subtitle": "A weather screen built as a sky — a real photograph behind everything, every panel outlined in pencil",
+      "description": "A live weather screen: a real sky photograph behind everything, nine palettes switched by the WMO weather code, animated sky layers, and panels drawn as runtime-measured pencil outlines. No API key, one request.",
+      "category": "Web platform",
+      "status": "live",
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Open-Meteo",
+        "OpenStreetMap",
+        "CSS custom properties",
+        "SVG filters"
+      ],
+      "tags": [
+        "weather",
+        "data-visualisation",
+        "css-animation",
+        "hand-drawn-ui",
+        "no-api-key"
+      ],
+      "year": "2024 — present",
+      "role": "Solo — interface, art direction, data layer, deployment",
+      "live": "https://weather-app-seven-sandy.vercel.app",
+      "repo": "https://github.com/AlexSaraev020/Weather_App",
+      "updated": "2026-11-26",
+      "sections": {
+        "overview": "EasyWeather is one screen and one question: what is the sky doing here, now, and when does it change.\n\nThe whole page is a real sky photograph — one per weather condition — with the interface painted over\nit. The temperature sits top-left at display size, the place and the search sit top-right, the seven\ndays run down the left as a rail, the next 24 hours run along the bottom as a band, and a mini map sits\nunder the search pointing at the place you typed. Everything else is the photograph itself, drifting.\n\nThe identity is drawn, not styled: panels have no filled boxes. Each one is outlined by a line the\napplication measures from its own box at runtime and wobbles with an SVG turbulence filter, so the\nlinework is graphite rather than a border.",
+        "problem": "The first version was a React and TypeScript demo with a looping video sky behind a grid of equal\ncards: six boxes of the same size, each holding a dense list of statistics. It showed a great deal of\ndata and answered no question. The cards covered the background they were supposed to be about, the\nvideos were 161 MB of the repository, and the numbers on screen (dew point, UV index, gusts, an air\nquality card, a sunrise arc) were more than anyone reading a weather screen actually uses.\n\nThree constraints had to be settled before any redesign:\n\n- A personal project should not need a paid key to show the weather, and should not ship a key to the\n  browser in the first place.\n- The background had to be real weather photography, not a CSS approximation, and each photograph had\n  to be one the project is allowed to store and serve.\n- On a 1440×900 laptop the page must not scroll. On a phone it may scroll vertically, but never\n  sideways.",
+        "solution": "**The sky first.** Nine photographs in `public/sky/`, one per condition, 2400 px wide, downloaded from\nUnsplash under the Unsplash License — the API route was closed at the time (Pexels has paused issuing\nnew keys, and an Unsplash API application needs a confirmed account), and the License permits storing\nand using them without it. `public/sky/CREDITS.md` names the author of each. Over the photo sits a wash\nof the palette's own card colour and a two-sided scrim that darkens only the column and the band where\ntext lives. The photo drifts on a slow scale-and-translate loop (`skyDrift`, 30–95 s per condition) —\nmovement without video. A 9% scale buffer keeps the drift from ever exposing an edge; the buffer was\nproved by measuring the layer's bounding box at three points of the cycle.\n\n**One attribute, nine palettes.** A WMO weather code plus the place's own clock pick one of nine keys\n(`clear-day`, `clear-night`, `partly`, `overcast`, `rain`, `sleet`, `snow`, `fog`, `thunder`) and land\nit on `[data-condition]` on the shell. That single attribute swaps every custom property at once: sky\nramp, pencil colour, veil, accent, photograph, drift distance and drift period. The sky layers — sun\nwith drawn rays, moon, 90 seeded stars, drifting clouds, rain, snow, fog veils, lightning — are all\nrendered once and switched on by the palette.\n\n**Linework measured, not drawn by hand.** `outlineD(w, h, rnd)` builds four quadratic sides whose end\npoints overshoot past each corner, like a pen that does not lift cleanly, and `useOutlines` reads every\npanel's real `offsetWidth`/`offsetHeight` through a `ResizeObserver` and repaints the path on change.\nTwo passes at different widths and opacities read as graphite; the wobble comes from `feTurbulence` plus\n`feDisplacementMap`. On hover a panel swaps to the heavier filter, and on load each line draws itself\nwith a dash offset. The contour is the panel; the fill is almost gone — `color-mix(in srgb, var(--card)\n38%, transparent)`.\n\n**Rain as drops, not sheets.** The animated rain is 18 seeded elements, 1.5 px wide and 12–30 px long,\nfalling on a negative delay so they are already spread out when the palette switches on. The earlier\nversion drew full-height streaks across the whole screen, which read as lines of code rather than rain.\n\n**The data layer, cut in half.** `getWeatherBundle` makes one Open-Meteo request for 16 variables: the\ncurrent hour, the next 24 hours and seven days. Air quality is gone with its card; so are UV, gusts,\ndew point, elevation, coordinates, sunrise and sunset. The geocoder is keyless too, and it is the same\ncall the search box and its suggestions use. Display strings come from one module of pure functions\n(`deg`, `compass`, `hourLabel`, `weekday`, `monthDay`, `peakRisk`, `fallName`), so the legend cannot\ndisagree with the numbers it describes. `fallName` exists because Open-Meteo's precipitation probability\ncounts snow as precipitation: on a snow day the strip says *snow risk peaks at 15:00, 100%*.",
+        "features": "- Nine real sky photographs, each credited, drifting slowly on a per-condition loop.\n- Runtime-measured pencil outlines on every panel, wobbling through an SVG turbulence filter.\n- Search with live suggestions from a keyless geocoder, keyboard-navigable, with the chosen place shown\n  as city, region, country and population.\n- A mini OpenStreetMap map under the search, exactly as wide as the search bar, pinned to the\n  coordinates the geocoder returned.\n- A 24-hour band of fixed-width cells that scrolls inside its own panel, with the scrollbar coloured\n  from the active palette.\n- A seven-day rail: what sky, how far the day swings, and the two ends of that swing on a shared\n  cold-to-hot scale.\n- Weather-code colour ramp: the same temperature is the same hue everywhere on the page, with an extra\n  contrast pass on the pale snow and fog palettes.\n- `prefers-reduced-motion` respected: the photograph stops drifting, rain and lightning are hidden, the\n  number appears already counted, and the outlines are drawn without their animation.",
+        "architecture": "`WeatherApp/` is Vite 5 + React 18 + TypeScript with one hand-written stylesheet,\n`src/styles/pencil.css`, that carries the whole look through custom properties. Tailwind is still wired\nthrough `src/index.css`, where it contributes only its base reset.\n\n- `src/components/actions/` — the boundary with the outside world. `FetchData.ts` calls\n  `geocoding-api.open-meteo.com` and `api.open-meteo.com` and maps the answers into `Place`, `Current`,\n  `Hour`, `Day` and `WeatherBundle`. `wmo.ts` maps WMO codes to the nine palette keys. `theme.ts` holds\n  the temperature colour ramp. `display.ts` holds the pure formatting helpers.\n- `src/components/pencil/` — the identity: `Sky.tsx` renders every sky layer once with seeded positions,\n  `sketch.ts` measures panels and paints their outlines, `icons.tsx` draws the nine weather glyphs,\n  `countUp.ts` counts the hero number.\n- `src/components/mainPage/` — the sheet: `MainPage.tsx` owns the grid (`hero / find / rail / open /\n  hours`), the search state and the loading skeleton; `Overlays.tsx` is the place, the map and the hero\n  number; `Forecast.tsx` is the week rail and the hours band.\n- `scripts/open-meteo.check.ts` — an assert-based self-check run straight through Node: it asks the live\n  API for the exact variable list the app requests, asserts all 16 fields are present, that the response\n  really holds 24 hours after the place's own hour, and that every formatting helper rounds the way the\n  page claims. Run: `node --experimental-strip-types scripts/open-meteo.check.ts`.\n- Hosting: Vercel builds `WeatherApp/` and serves the static output; the repository's GitHub integration\n  redeploys production on every push to `main`.",
+        "challenges": "- **The 900 px budget.** The old layout survived on six magic minimum heights. The new shell is\n  `auto / 1fr / auto`, so the height left after the hero and the hours band lands in the deliberately\n  empty cell beside the rail — the one place the photograph is allowed to stay just a photograph. The\n  budget is now checked by measurement at 1440×900, 1366×768, 1920×1080 and 390×844 rather than by\n  numbers written into the stylesheet.\n- **Legibility with no card behind the text.** The pale snow and fog palettes washed the cold-to-hot\n  temperature hues out, so those two conditions get a `saturate(1.8) brightness(.68)` pass on the\n  numbers, chosen from screenshots of Anchorage (fog) and Vienna (snow) rather than from theory.\n- **Finding one real city per condition.** Screenshotting nine states meant finding live weather in\n  nine places: 114 cities were queried to cover eight of the nine, and a further 69 cold cities to hunt\n  the sleet codes 56/57/66/67. None had sleet on the day, so that one palette is verified by forcing\n  `data-condition` instead.\n- **A grid track that overflowed its own column.** After the map was added, the search bar measured\n  348 px inside a 343 px column: a single-line flex container sizes its grid track to the sum of its\n  items' minimum contributions. Naming the track `minmax(0,1fr)` fixed it, and the search bar and the\n  map now measure identical widths at every breakpoint.\n- **The API-key routes that were not open.** Unsplash's API needs a confirmed account before an\n  application can be created and its terms require hotlinking plus visible attribution; Pexels has\n  stopped issuing new keys; Openverse answers are largely `by-nc`/`by-nd`. Storing the photographs under\n  the Unsplash License and crediting their authors was the compliant path, and no key is used at runtime.",
+        "results": "- One request instead of two, and 16 variables instead of 38: the payload is smaller and no secret is\n  sent to the browser.\n- The 161 MB of looping video backgrounds is no longer loaded by the page. The sky is nine still\n  photographs, 3.3 MB in `public/sky/` in total.\n- Verified on the current build: TypeScript compiles clean, the production build completes, the data\n  self-check passes, the browser logs no console errors and no failed requests, 1440×900 and 1920×1080\n  render with no page scroll, and 390×844 scrolls only inside the hours band.\n- The repository now carries `PORTFOLIO.md`, so the project publishes itself into the CV feed on the\n  next synchronisation.",
+        "future": "Deliberately not planned: a 14 or 30 day forecast (the API answers seven days and the screen reads as a\nday), sunrise and sunset (cut with the card that held them), and a switch back to video for the sky.\n\nStill open: the nine `src/images/videos` files from the first version are unreferenced and should be\ndropped in a cleanup pass; `axios` is a dependency nothing imports; the old `VITE_WEATHER_APP_API_KEY`\non Vercel is no longer read by the app."
+      },
+      "extras": [],
+      "repoUrl": "https://github.com/AlexSaraev020/Weather_App",
+      "repoName": "Weather_App",
+      "branch": "main",
+      "publishedFrom": "AlexSaraev020/Weather_App",
+      "images": [
+        {
+          "kind": "cover",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/Weather_App/main/docs/portfolio/weather-overcast.jpg",
+          "path": "docs/portfolio/weather-overcast.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/Weather_App/main/docs/portfolio/weather-rain.jpg",
+          "path": "docs/portfolio/weather-rain.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/Weather_App/main/docs/portfolio/weather-snow.jpg",
+          "path": "docs/portfolio/weather-snow.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/Weather_App/main/docs/portfolio/weather-night.jpg",
+          "path": "docs/portfolio/weather-night.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/Weather_App/main/docs/portfolio/weather-fog.jpg",
+          "path": "docs/portfolio/weather-fog.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/Weather_App/main/docs/portfolio/weather-search.jpg",
+          "path": "docs/portfolio/weather-search.jpg",
+          "w": 1440,
+          "h": 900
+        },
+        {
+          "kind": "gallery",
+          "src": "https://raw.githubusercontent.com/AlexSaraev020/Weather_App/main/docs/portfolio/weather-phone.jpg",
+          "path": "docs/portfolio/weather-phone.jpg",
+          "w": 390,
+          "h": 844
+        }
+      ],
+      "warnings": []
+    },
     {
       "slug": "world-wide-lens",
       "name": "World Wide Lens",
