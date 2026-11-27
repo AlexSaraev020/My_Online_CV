@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-26T20:04:36.817Z",
+    "generatedAt": "2026-11-27T01:17:54.524Z",
     "user": "AlexSaraev020",
     "accountRepos": 10,
     "eligible": 4,
@@ -32,7 +32,7 @@
     ],
     "warnings": [],
     "partial": false,
-    "apiCallsRemaining": 39
+    "apiCallsRemaining": 4991
   },
   "projects": [
     {
@@ -243,7 +243,7 @@
       "repo": "https://github.com/AlexSaraev020/MERN_Steam_App",
       "updated": "2026-11-24",
       "sections": {
-        "overview": "GamersLobby is a store view over IGDB's game catalogue. Three screens carry it: a Store with a featured\ncarousel and genre rails, Search game with a filter bar and a grid or list view, and a profile that\nholds the titles you hearted and the hours you logged. The Store shows the shelf IGDB's members rated\nmost; a typed title is searched at IGDB itself, so all 388,273 records are reachable, not only the\nthousand on the shelf.\n\nEverything on screen comes from IGDB: the list, the per-title description, the screenshots and both\nscores. IGDB publishes no price and no player count, so the interface shows neither — the numeral on\na card is the score its members gave.",
+        "overview": "GamersLobby is a store view over IGDB's game catalogue. Three screens carry it: a Store with a featured\ncarousel and genre rails, Search with a filter bar and a grid or list view, and a profile that\nholds the titles you hearted and the hours you logged. The Store shows the shelf IGDB's members rated\nmost; a typed title is searched at IGDB itself, so all 388,273 records are reachable, not only the\nthousand on the shelf.\n\nEverything on screen comes from IGDB: the list, the per-title description, the screenshots and both\nscores. IGDB publishes no price and no player count, so the interface shows neither — the numeral on\na card is the score its members gave.",
         "problem": "The first version was a MERN demo that showed a list of games and nothing you could do with them.\nThe interesting parts were missing: a session that survives a reload, favourites that live on the\naccount instead of in the page, and a way to keep track of what you actually played.\n\nThe catalogue also has to come from somewhere a personal project may use for free, and the client\nsecret for that source cannot live in the browser.",
         "solution": "The frontend is Create React App with TypeScript and Tailwind, and one hand-written stylesheet\n(`src/styles/arcade.css`) that carries the whole look through `arc-*` classes and CSS custom\nproperties — colour ramp, type scale, spacing, radii, durations and breakpoints are tokens, not\nper-component decisions.\n\nThe backend is Express with Mongoose: `/register`, `/login`, `/user/:id`, `/userUpdate`, `/favorite`\nand `/rmfavorite`. Login answers with a JWT and an httpOnly cookie; the page keeps the token in\n`localStorage` and decodes it to restore the session, because the cookie cannot be read back from\nJavaScript.\n\nPlaytime is stored per browser under a key namespaced by the signed-in user id. The user record has\nno playtime column yet, so this is a deliberate local store rather than a fake server field.",
         "features": "- Featured carousel with keyboard arrows, dots, auto-advance, and a reduced-motion path; the three it features are not repeated in the rails below\n- The navigation bar floats off the page edges, and its one underline slides from the tab you were on to the one you picked\n- Debounced search sent to IGDB's own full-text index, so a title outside the loaded shelf is found\n- Filter bar with genre chips derived from the fetched catalogue, plus newest / oldest / A–Z sorting\n- Grid and list views over the same filtered result\n- Every card is the same shape: a 3:4 cover shown whole, two title lines, a fixed-height genre strip\n- Favourites saved on the account and restored after a reload\n- Hours logged per title with `+1 h` and `+5 h` buttons\n- The title page is two columns: the trailers and every screenshot on the left, a card on the right with the cover, the short description, the release date, the developer and the publisher\n- The title page waits for the media and shows a shimmering skeleton until the screenshots and trailers arrive\n- Arrow keys move the media carousel, both on the plate and inside the full-size view\n- Favourites and the hours log require a signed-in account; a visitor gets the way in instead of controls that would silently do nothing\n- Related titles come from IGDB's own `similar_games` list and from a query for the same developer's other games\n- The opened image fills 90% of the viewport and closes on an outside click, Escape or its own button\n- The screen lives in the URL hash, so the browser's back and forward work and each screen starts at its top\n- The whole card opens a title; the heart sits in a higher layer and keeps its own click\n- Profile editor with gamertag and bio validation",
